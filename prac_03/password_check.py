@@ -1,8 +1,19 @@
-MIN_LEN = 5
 
-password = input("Enter Password: ")
+def main():
+    password = get_password()
+    print_password(password)
 
-while len(password) < MIN_LEN:
+
+def get_password():
+    MIN_LEN = 5
     password = input("Enter Password: ")
+    while len(password) < MIN_LEN:
+        password = input("Enter Password: ")
+    return password
 
-print("*"*len(password))
+
+def print_password(password):
+    print("*" * len(password))
+
+
+main()

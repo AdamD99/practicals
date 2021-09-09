@@ -16,6 +16,7 @@ def main():
 def input_type(USERINPUT):
     guitars = []
     if USERINPUT:
+        print("My Guitars!")
         name = input("Name: ")
         while name != "":
             year = int(input("Year: "))

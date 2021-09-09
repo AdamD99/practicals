@@ -6,6 +6,8 @@ USERINPUT = False
 
 def main():
     guitars = input_type(USERINPUT)  # returns list of guitars
+    if not guitars:
+        return print("No guitars")
     longest_name = max(len(guitars[i].name) for i in range(0, len(guitars)))  # find longest name for dynamic formatting
     print("These are my guitars:")
     for i, guitar in enumerate(guitars):

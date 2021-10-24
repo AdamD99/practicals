@@ -5,36 +5,23 @@ Demos of various os module examples
 import shutil
 import os
 
-
-def main():
-    """Demo os module functions."""
-    print("Starting directory is: {}".format(os.getcwd()))
-
-    # Change to desired directory
-    os.chdir('Lyrics/Christmas')
-
-    # Print a list of all files in current directory
-    print("Files in {}:\n{}\n".format(os.getcwd(), os.listdir('.')))
-
-    # Make a new directory
-    try:
-        os.mkdir('temp')
-    except FileExistsError:
-        pass
-
-    # Loop through each file in the (current) directory
-    for filename in os.listdir('.'):
-        # Ignore directories, just process files
-        if os.path.isdir(filename):
-            continue
-
-        new_name = get_fixed_filename(filename)
-        print("Renaming {} to {}".format(filename, new_name))
+SPECIAL_CHARACTERS = "()_"
 
 
 def get_fixed_filename(filename):
     """Return a 'fixed' version of filename."""
-    new_name = filename.replace(" ", "_").replace(".TXT", ".txt")
+    filename = filename.replace(" ", "_").replace(".TXT", ".txt")
+    new_name = ""
+    for i, char in enumerate(filename):
+        try:
+            if char not in SPECIAL_CHARACTERS and filename[i + 1].isupper():
+                new_name += f"{char}_"
+            elif char.islower() and (filename[i - 1] == "_" or filename[i - 1] == "("):
+                new_name += char.upper()
+            else:
+                new_name += char
+        except IndexError:
+            new_name += char
     return new_name
 
 
@@ -48,9 +35,11 @@ def demo_walk():
         print("(Current working directory is: {})".format(os.getcwd()))
 
         for filename in filenames:
-            filename = os.path.join(directory_name, filename)
             new_name = get_fixed_filename(filename)
+            new_name = os.path.join(directory_name, new_name)
+            filename = os.path.join(directory_name, filename)
+            print(new_name)
             os.rename(filename, new_name)
 
-# main()
+
 demo_walk()
